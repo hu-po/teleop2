@@ -2,7 +2,7 @@ use k::prelude::*;
 
 fn main() {
     // Load urdf file
-    let chain = k::Chain::<f32>::from_urdf_file("3dof.urdf").unwrap();
+    let chain = k::Chain::<f32>::from_urdf_file("src/3dof.urdf").unwrap();
     println!("chain: {chain}");
 
     // Set initial joint angles
