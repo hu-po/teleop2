@@ -2,16 +2,16 @@ use k::prelude::*;
 
 fn main() {
     // Load urdf file
-    let chain = k::Chain::<f32>::from_urdf_file("src/3dof.urdf").unwrap();
+    let chain = k::Chain::<f32>::from_urdf_file("urdf/3dof.urdf").unwrap();
     println!("chain: {chain}");
 
     // Set initial joint angles
-    let angles = vec![0.2, 0.2, 0.0];
+    let angles = vec![0.0, 0.0, 0.0];
 
     chain.set_joint_positions(&angles).unwrap();
     println!("initial angles={:?}", chain.joint_positions());
 
-    let target_link = chain.find("Link_EE").unwrap();
+    let target_link = chain.find("Joint_EE").unwrap();
 
     // Get the transform of the end of the manipulator (forward kinematics)
     chain.update_transforms();
@@ -24,8 +24,9 @@ fn main() {
     // Create IK solver with default settings
     let solver = k::JacobianIkSolver::default();
 
-    // Create a set of joints from end joint
+    // Create a set of joints from end joint7
     let arm = k::SerialChain::from_end(target_link);
+
     // solve and move the manipulator angles
     solver.solve(&arm, &target).unwrap();
     println!("solved angles={:?}", chain.joint_positions());
